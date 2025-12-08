@@ -4,20 +4,52 @@ Test suite for the Calculator class.
 
 import pytest
 from calculator.calculator import Calculator, InvalidInputException
+""" random is used to kill mutants that modify the values of either a or b"""
+import random 
 
 @pytest.fixture
 def calc():
     return Calculator()
 
+import pytest
+
+
+def test_valid_input_raises_IVE_with_correct_message(calc):
+    
+    # Arrange 
+    expected_partial_message = f"Invalid values : a and b must be between {calc.MIN_VALUE} and  {calc.MAX_VALUE}"
+    invalid_input = calc.MAX_VALUE + 1
+
+    # Act
+    with pytest.raises(InvalidInputException) as excinfo:
+        calc.add(invalid_input, 2)
+    
+    # Assert 
+    assert expected_partial_message in str(excinfo.value)
+
+
+def test_valid_input_raises_TEE_with_correct_message(calc):
+
+    #Arrange
+    expected_partial_message = "Give two values a and b"
+
+    #Act
+    with pytest.raises(TypeError) as excinfo:
+        calc._validate_input(1)
+
+    #Assert
+    assert expected_partial_message in str(excinfo.value)
+
+    
 class TestAddition:
     """Tests for the add method."""
 
     def test_add_positive_numbers(self, calc):
         """Test adding two positive numbers."""
         # Arrange
-        a = 5
-        b = 3
-        expected = 8
+        a = random.randint(0, calc.MAX_VALUE) 
+        b = random.randint(0, calc.MAX_VALUE) 
+        expected = a+b
 
         # Act
         result = calc.add(a, b)
@@ -28,9 +60,9 @@ class TestAddition:
     def test_add_negative_numbers(self, calc):
         """Test adding two negative numbers."""
         # Arrange
-        a = -5
-        b = -3
-        expected = -8
+        a = random.randint(0, calc.MAX_VALUE) 
+        b = random.randint(0, calc.MAX_VALUE) 
+        expected = a+b
 
         # Act
         result = calc.add(a, b)
@@ -42,9 +74,9 @@ class TestAddition:
         """Test adding positive and negative numbers."""
         # Arrange
         
-        a = 5
-        b = -3
-        expected = 2
+        a = random.randint(0, calc.MAX_VALUE) 
+        b = random.randint(calc.MIN_VALUE, 0) 
+        expected = a+b
 
         # Act
         result = calc.add(a, b)
@@ -56,9 +88,9 @@ class TestAddition:
         """Test adding negative and positive numbers."""
         # Arrange
         
-        a = -5
-        b = 3
-        expected = -2
+        a = random.randint(calc.MIN_VALUE, 0) 
+        b = random.randint(0, calc.MAX_VALUE) 
+        expected = a+b
 
         # Act
         result = calc.add(a, b)
@@ -70,9 +102,9 @@ class TestAddition:
         """Test adding positive number with zero."""
         # Arrange
         
-        a = 5
+        a = random.randint(0, calc.MAX_VALUE) 
         b = 0
-        expected = 5
+        expected = a+b
 
         # Act
         result = calc.add(a, b)
@@ -85,8 +117,8 @@ class TestAddition:
         # Arrange
         
         a = 0
-        b = 5
-        expected = 5
+        b = random.randint(0, calc.MAX_VALUE) 
+        expected = a+b
 
         # Act
         result = calc.add(a, b)
@@ -98,9 +130,9 @@ class TestAddition:
         """Test adding floating point numbers."""
         # Arrange
         
-        a = 2.5
-        b = 3.7
-        expected = 6.2
+        a = random.uniform(calc.MIN_VALUE, calc.MAX_VALUE) 
+        b = random.uniform(calc.MIN_VALUE, calc.MAX_VALUE) 
+        expected = a+b
 
         # Act
         result = calc.add(a, b)
@@ -117,9 +149,9 @@ class TestSubtraction:
         # TODO: Implement
         # Arrange
         
-        a = 10
-        b = 5
-        expected = 5
+        a = random.randint(0, calc.MAX_VALUE) 
+        b = random.randint(0, calc.MAX_VALUE) 
+        expected = a-b
 
         # Act
         result = calc.subtract(a, b)
@@ -136,9 +168,9 @@ class TestMultiplication:
         # TODO: Implement
         # Arrange
         
-        a = 10
-        b = 5
-        expected = 50
+        a = random.randint(0, calc.MAX_VALUE) 
+        b = random.randint(0, calc.MAX_VALUE) 
+        expected = a*b
 
         # Act
         result = calc.multiply(a, b)
@@ -155,15 +187,15 @@ class TestDivision:
         # TODO: Implement
         # Arrange
         
-        a = 10
-        b = 5
-        expected = 2
+        a = random.randint(0, calc.MAX_VALUE) 
+        b = random.randint(0, calc.MAX_VALUE) 
+        expected = a/b
 
         # Act
         result = calc.divide(a, b)
 
         # Assert
-        assert result == expected
+        assert result == pytest.approx(expected)
 
 
 

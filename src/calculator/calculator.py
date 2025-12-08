@@ -21,14 +21,22 @@ class Calculator:
             *values: Variable number of values to validate
 
         Raises:
-            InvalidInputException: If any value is > 1000000 or < -1000000
+            InvalidInputException: 1) If any value is > 1000000 or < -1000000
+                                   2) If the number of values is different from 2
         """
+
+        if (len(values) != 2):
+            raise TypeError("Give two values a and b")
         for value in values:
             if value > self.MAX_VALUE or value < self.MIN_VALUE:
                 raise InvalidInputException(
-                    f"Input value {value} is outside the valid range "
-                    f"[{self.MIN_VALUE}, {self.MAX_VALUE}]"
+                    f"Invalid values : a and b must be between {self.MIN_VALUE} and  {self.MAX_VALUE}"
                 )
+            
+    """
+    f"Input value {value} is outside the valid range "
+                    f"[{self.MIN_VALUE}, {self.MAX_VALUE}]"
+    """
 
     def add(self, a, b):
         """Add two numbers.
