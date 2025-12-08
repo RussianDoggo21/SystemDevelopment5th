@@ -14,7 +14,7 @@ def calc():
 import pytest
 
 
-def test_valid_input_raises_IVE_with_correct_message(calc):
+def test_valid_input_raises_Invalid_Value_Error_with_correct_message1(calc):
     
     # Arrange 
     expected_partial_message = f"Invalid values : a and b must be between {calc.MIN_VALUE} and  {calc.MAX_VALUE}"
@@ -28,7 +28,7 @@ def test_valid_input_raises_IVE_with_correct_message(calc):
     assert expected_partial_message in str(excinfo.value)
 
 
-def test_valid_input_raises_TEE_with_correct_message(calc):
+def test_valid_input_raises_Type_Error_with_correct_message(calc):
 
     #Arrange
     expected_partial_message = "Give two values a and b"
@@ -40,6 +40,18 @@ def test_valid_input_raises_TEE_with_correct_message(calc):
     #Assert
     assert expected_partial_message in str(excinfo.value)
 
+def test_valid_input_raises_Value_Error_with_correct_message2(calc):
+    
+    # Arrange 
+    expected_partial_message = "Cannot divide by zero"
+    a = random.randint(1, calc.MAX_VALUE)
+
+    # Act
+    with pytest.raises(ValueError) as excinfo: 
+        calc.divide(a,0)
+    
+    # Assert 
+    assert expected_partial_message in str(excinfo.value)
     
 class TestAddition:
     """Tests for the add method."""
