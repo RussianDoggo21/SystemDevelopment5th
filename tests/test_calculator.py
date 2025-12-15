@@ -4,15 +4,14 @@ Test suite for the Calculator class.
 
 import pytest
 from calculator.calculator import Calculator, InvalidInputException
-""" random is used to kill mutants that modify the values of either a or b"""
 import random 
+import pytest
+""" random is used to kill mutants that modify the values of either a or b"""
+
 
 @pytest.fixture
 def calc():
     return Calculator()
-
-import pytest
-
 
 def test_valid_input_raises_Invalid_Value_Error_with_correct_message1(calc):
     
