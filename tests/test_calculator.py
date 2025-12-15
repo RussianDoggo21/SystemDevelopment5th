@@ -5,7 +5,6 @@ Test suite for the Calculator class.
 import pytest
 from calculator.calculator import Calculator, InvalidInputException
 import random 
-import pytest
 """ random is used to kill mutants that modify the values of either a or b"""
 
 
