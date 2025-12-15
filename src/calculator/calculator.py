@@ -5,6 +5,7 @@ A simple calculator module with basic arithmetic operations.
 
 class InvalidInputException(Exception):
     """Exception raised when input values are outside the valid range."""
+
     pass
 
 
@@ -25,14 +26,14 @@ class Calculator:
                                    2) If the number of values is different from 2
         """
 
-        if (len(values) != 2):
+        if len(values) != 2:
             raise TypeError("Give two values a and b")
         for value in values:
             if value > self.MAX_VALUE or value < self.MIN_VALUE:
                 raise InvalidInputException(
                     f"Invalid values : a and b must be between {self.MIN_VALUE} and  {self.MAX_VALUE}"
                 )
-            
+
     """
     f"Input value {value} is outside the valid range "
                     f"[{self.MIN_VALUE}, {self.MAX_VALUE}]"
@@ -104,10 +105,3 @@ class Calculator:
         if b == 0:
             raise ValueError("Cannot divide by zero")
         return a / b
-    
-
-
-
-
-
-
